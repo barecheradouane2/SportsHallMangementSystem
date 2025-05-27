@@ -23,6 +23,8 @@ namespace Sportshall.Core.interfaces
 
         public IRevenuesRepositry RevenuesRepositry { get; }
 
+        public IAuth Auth { get; }
+
 
     }
 }

@@ -28,7 +28,7 @@ namespace Sportshall.Core.Entites
 
         public decimal Amount { get; set; }
 
-        public DateTime RevenueDate { get; set; } = DateTime.Today.Date;
+        public DateTime RevenueDate { get; set; } = DateTime.Today;
 
         public string? Note { get; set; }
 
