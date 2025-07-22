@@ -16,6 +16,10 @@ namespace Sportshall.Core.DTO
 {
     public record AttendancesDTO
     {
+
+        public int ID { get; set; }
+
+
         [Column(TypeName = "date")]
 
          [JsonConverter(typeof(DateOnlyJsonConverter))]

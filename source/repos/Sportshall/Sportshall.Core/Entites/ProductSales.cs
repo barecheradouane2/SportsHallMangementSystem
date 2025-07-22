@@ -10,10 +10,10 @@ namespace Sportshall.Core.Entites
     public class ProductSales : BaseEntity<int>
     {
         public ProductSales() { }
-        public ProductSales(decimal totalPrice, decimal ClientPayement, bool isFullPaid, int membersID)
+        public ProductSales(decimal totalPrice, decimal clientPayement, bool isFullPaid, int membersID)
         {
             TotalPrice = totalPrice;
-            ClientPayement = ClientPayement;
+            ClientPayement = clientPayement;
             IsFullPaid = isFullPaid;
             MembersID = membersID;
             ProductSalesItems = new List<ProductSalesItem>(); // initialize as needed

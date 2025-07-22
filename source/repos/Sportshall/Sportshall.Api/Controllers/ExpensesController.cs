@@ -24,20 +24,37 @@ namespace Sportshall.Api.Controllers
         {
             try
             {
-                var expenses = await work.ExpensesRepositry.GetAllAsync();
+                var expensesDTOList = await work.ExpensesRepositry.GetAllAsync(generalParams);
 
-                if (expenses is null)
+                if (expensesDTOList is null)
                 {
                     return BadRequest(new ResponseApi(400));
                 }
 
                 var totalCount = await work.ExpensesRepositry.CountAsync();
 
-                var expensesDTOList = mapper.Map<IEnumerable<ExpensesDTO>>(expenses);
+               
 
 
 
                 return Ok(new Pagination<ExpensesDTO>(generalParams.PageNumber,generalParams.PageSize,totalCount, expensesDTOList));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("get-total-expenses")]
+        public async Task<IActionResult> GetTotalExpenses([FromQuery] FilterParams filterParams)
+        {
+            try
+            {
+                var totalExpenses = await work.ExpensesRepositry.GetTotalExpensesAsync(filterParams);
+
+               
+
+                return Ok(totalExpenses);
             }
             catch (Exception ex)
             {

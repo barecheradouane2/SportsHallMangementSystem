@@ -1,4 +1,6 @@
-﻿using Sportshall.Core.Entites;
+﻿using Sportshall.Core.DTO;
+using Sportshall.Core.Entites;
+using Sportshall.Core.Sharing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,12 @@ namespace Sportshall.Core.interfaces
 {
     public interface IExpensesRepositry : IGenericRepositry<Expenses>
     {
+
+        Task<IEnumerable<ExpensesDTO>> GetAllAsync(GeneralParams generalParams);
+
+        Task<decimal> GetTotalExpensesAsync(FilterParams filterParams);
+
+
 
     }
 }

@@ -126,6 +126,8 @@ namespace Sportshall.infrastructure.Repositries
 
             var query = context.Activities.Include(x=>x.Photos).AsNoTracking();
 
+        
+
             if (activitesParams.Sort == "asc")
             {
                 query = query.OrderBy(x => x.Name);

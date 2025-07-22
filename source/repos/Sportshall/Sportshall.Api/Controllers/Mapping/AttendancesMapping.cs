@@ -16,7 +16,7 @@ namespace Sportshall.Api.Controllers.Mapping
                  .ReverseMap();
 
 
-            CreateMap<Attendances, UpdateAttendancesDTO>().ReverseMap();
+            CreateMap<Sportshall.Core.Entites.Attendances, Sportshall.Core.DTO.UpdateAttendancesDTO>().ReverseMap();
 
             // 🔧 Add this to fix the error
             CreateMap<Sportshall.Core.DTO.AddAttendancesDTO, Sportshall.Core.Entites.Attendances>().ReverseMap();

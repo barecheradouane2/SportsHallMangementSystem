@@ -22,16 +22,34 @@ namespace Sportshall.Api.Controllers
         {
             try
             {
-                var revenues = await work.RevenuesRepositry.GetAllAsync();
+                var revenuesDTO = await work.RevenuesRepositry.GetAllAsync(generalParams);
 
-                if (revenues is null)
+                if (revenuesDTO is null)
                 {
                     return BadRequest(new ResponseApi(400));
                 }
 
                 var totalCount = await work.RevenuesRepositry.CountAsync();
-                var revenuesDTO = mapper.Map<IReadOnlyList<RevenuesDTO>>(revenues);
+
                 return Ok(new Pagination<RevenuesDTO>(generalParams.PageNumber, generalParams.PageSize, totalCount, revenuesDTO));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("get-total-revenue")]
+
+        public async Task<IActionResult> GetTotalRevenue([FromQuery] FilterParams filterParams)
+        {
+            try
+            {
+                var totalRevenue = await work.RevenuesRepositry.GetTotalRevenueAsync(filterParams);
+
+               
+
+                return Ok(totalRevenue);
             }
             catch (Exception ex)
             {

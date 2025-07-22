@@ -7,6 +7,7 @@ namespace Sportshall.Api.Controllers.Mapping
         public ActivitiesMapping()
         {
             CreateMap<Sportshall.Core.Entites.Activities, Sportshall.Core.DTO.ActivitiesDTO>()
+                
                 .ReverseMap();
 
             

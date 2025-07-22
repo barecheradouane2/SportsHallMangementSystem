@@ -43,7 +43,11 @@ namespace Sportshall.infrastructure.Repositries
             {
                 var searchWords = generalParams.Search.Split(" ");
 
-                query = query.Where(x => searchWords.All(word => x.FullName.ToLower().Contains(word.ToLower()) || x.PhoneNumber.ToLower().Contains(word.ToLower())));
+                query = query.Where(x => searchWords.All(word => x.FullName.ToLower().Contains(word.ToLower()) || x.PhoneNumber.ToLower().Contains(word.ToLower()) ||
+                x.Id.ToString().Contains(word)
+                ))
+                    
+                    ;
 
 
             }

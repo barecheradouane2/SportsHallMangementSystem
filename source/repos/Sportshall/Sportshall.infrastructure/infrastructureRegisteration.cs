@@ -36,6 +36,9 @@ namespace Sportshall.infrastructure
 
             services.AddScoped<IGenerateToken, GenerateToken>();
 
+            //services.AddScoped<IAuth, AuthRepositry>();
+
+
             services.AddSingleton<IImageMangementService, ImageMangementService>();
 
             services.AddScoped <ISubscriptionService, SubscriptionService>();
@@ -48,6 +51,9 @@ namespace Sportshall.infrastructure
             {
                 options.UseSqlServer(configuration.GetConnectionString("SportshallDataBase"));
             });
+
+           
+
 
             services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 

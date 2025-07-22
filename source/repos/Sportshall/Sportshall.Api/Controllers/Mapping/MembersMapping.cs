@@ -11,6 +11,8 @@ namespace Sportshall.Api.Controllers.Mapping
 
             CreateMap<Sportshall.Core.DTO.AddMembersDTO, Sportshall.Core.Entites.Members>()
                 .ReverseMap();
+            CreateMap<Sportshall.Core.DTO.UpdateMembersDTO, Sportshall.Core.Entites.Members>()
+                .ReverseMap();
         }
     }
 

@@ -18,11 +18,13 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-all-offers")]
-        public async Task<IActionResult> GetAllOffers([FromQuery] ActivitesParams activitesParams)
+        public async Task<IActionResult> GetAllOffers([FromQuery] GeneralParams activitesParams)
         {
             try
             {
-                var offers = await work.OffersRepositry.GetAllAsync(o => o.Activities);
+                //var offers = await work.OffersRepositry.GetAllAsync(activitesParams);
+
+                var offers = await work.OffersRepositry.GetAllAsync( o => o.Activities);
 
                 if (offers is null)
                 {
@@ -36,7 +38,7 @@ namespace Sportshall.Api.Controllers
 
 
 
-                return Ok(new Pagination<OffersDTO>(activitesParams.PageNumber, activitesParams.PageSize, totalCount, offersDTOList));
+                return Ok(offersDTOList);
 
             }
             catch (Exception ex)

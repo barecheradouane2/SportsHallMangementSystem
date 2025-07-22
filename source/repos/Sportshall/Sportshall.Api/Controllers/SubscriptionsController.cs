@@ -53,7 +53,7 @@ namespace Sportshall.Api.Controllers
         [HttpGet("getall-subsctipton")]
 
 
-        public async Task<IActionResult> GetAllSubsctiption(SubscriptionsParams subscriptionsParams)
+        public async Task<IActionResult> GetAllSubsctiption([FromQuery] SubscriptionsParams subscriptionsParams)
         {
 
             try
@@ -65,8 +65,9 @@ namespace Sportshall.Api.Controllers
                     return BadRequest(new ResponseApi(400));
                 }
 
+               // var totalCount = subscriptiondtolist.Count();
 
-                var totalCount = await _subscriptionService.CountAsync();
+                var totalCount = await _subscriptionService.CountAsync(subscriptionsParams);
 
 
                 return Ok(new Pagination<SubscriptionsDTO>(subscriptionsParams.PageNumber, subscriptionsParams.PageSize, totalCount, subscriptiondtolist));
@@ -83,8 +84,37 @@ namespace Sportshall.Api.Controllers
 
         }
 
+        [HttpGet("get-subscription-stats")]
+        public async Task<IActionResult> GetSubscriptionStats()
+        {
+            try
+            {
+                var stats = await _subscriptionService.GetSubscriptionstats();
 
-        
+                return Ok(stats);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpGet("getall-total-subsctipton")]
+        public async Task<IActionResult> GetTotalSubscription([FromQuery] FilterParams filterParams)
+        {
+            try
+            {
+                var totalSubscription = await _subscriptionService.GetTotalSubscriptionAsync(filterParams);
+
+                return Ok(totalSubscription);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         [HttpGet("get-subsctipton-by-id/{id}")]
 

@@ -40,7 +40,7 @@ namespace Sportshall.Core.DTO
 
         public decimal ClientPayement { get; set; } 
 
-        public bool IsFullPaid { get; set; } 
+       
 
         public DateTime SaleDate { get; set; } 
 

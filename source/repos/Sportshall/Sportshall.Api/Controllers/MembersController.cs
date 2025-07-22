@@ -29,7 +29,11 @@ namespace Sportshall.Api.Controllers
                     return BadRequest(new ResponseApi(400));
                 }
 
-                return Ok(members);
+                var totalCount = await work.MembersRepositry.CountAsync();
+
+                return Ok(new Pagination<MembersDTO>(generalParams.PageNumber, generalParams.PageSize, totalCount, members));
+
+                
             }
             catch (Exception ex)
             {
@@ -82,7 +86,7 @@ namespace Sportshall.Api.Controllers
         [HttpPut("update-Member")]
 
 
-        public async Task<IActionResult> UpdateMember([FromBody] AddMembersDTO memberdto)
+        public async Task<IActionResult> UpdateMember([FromBody] UpdateMembersDTO memberdto)
         {
 
             try

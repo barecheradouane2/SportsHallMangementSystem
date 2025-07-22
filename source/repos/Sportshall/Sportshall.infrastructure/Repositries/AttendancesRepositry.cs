@@ -40,28 +40,40 @@ namespace Sportshall.infrastructure.Repositries
             }
 
 
+
+
+
             if (!string.IsNullOrEmpty(attendancesParams.Search))
             {
-                var searchWords = attendancesParams.Search.Split(" ");
+                var searchWords = attendancesParams.Search
+                    .Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
+                var validDates = searchWords
+                    .Where(word => DateTime.TryParse(word, out _))
+                    .Select(word => DateTime.Parse(word).Date)
+                    .ToList();
+
+                var textWords = searchWords
+                    .Where(word => !DateTime.TryParse(word, out _))
+                    .Select(word => word.ToLower())
+                    .ToList();
 
                 query = query.Where(x =>
-                searchWords.Any(word =>
-                  x.AttendanceDate.ToString("yyyy-MM-dd").Contains(word)));
-
-
-
-
+                    (validDates.Count == 0 || validDates.Contains(x.AttendanceDate.Date)) &&
+                    textWords.All(word =>
+                        x.Member.FullName.ToLower().Contains(word) ||
+                        x.Activities.Name.ToLower().Contains(word) ||
+                        x.Status.ToString().ToLower().Contains(word)
+                    ));
             }
 
-            if (!string.IsNullOrWhiteSpace(attendancesParams.MemberFullName))
-            {
-                query = query.Where(x => x.Member.FullName.ToLower() == attendancesParams.MemberFullName.ToLower());
-            }
 
-            if (!string.IsNullOrWhiteSpace(attendancesParams.ActivityName))
+
+
+            if (attendancesParams.PageNumber > 0 && attendancesParams.PageSize > 0)
             {
-                query = query.Where(x => x.Activities.Name.ToLower() == attendancesParams.ActivityName.ToLower());
+                query = query.Skip((attendancesParams.PageNumber - 1) * attendancesParams.PageSize)
+                             .Take(attendancesParams.PageSize);
             }
 
 

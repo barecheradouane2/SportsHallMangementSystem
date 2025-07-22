@@ -9,8 +9,8 @@ namespace Sportshall.Core.DTO
 {
     public record ActivitiesDTO
     (
-       
-        string Name,
+           int ID ,
+           string Name,
         string Description,
 
         List<PhotoDTO> Photos

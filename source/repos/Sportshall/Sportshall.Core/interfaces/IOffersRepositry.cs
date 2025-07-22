@@ -1,4 +1,6 @@
-﻿using Sportshall.Core.Entites;
+﻿using Sportshall.Core.DTO;
+using Sportshall.Core.Entites;
+using Sportshall.Core.Sharing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +11,7 @@ namespace Sportshall.Core.interfaces
 {
     public interface IOffersRepositry : IGenericRepositry<Offers>
     {
+
+        Task<IEnumerable<OffersDTO>> GetAllAsync(GeneralParams generalParams);
     }
 }

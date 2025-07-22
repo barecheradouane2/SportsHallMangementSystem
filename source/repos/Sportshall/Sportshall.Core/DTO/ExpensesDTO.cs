@@ -1,8 +1,10 @@
 ﻿using Sportshall.Core.Entites;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Sportshall.Core.DTO
@@ -12,6 +14,11 @@ namespace Sportshall.Core.DTO
         public int Id { get; set; }
         public string Name { get; set; } 
         public decimal TotalPrice { get; set; }
+
+
+        [Column(TypeName = "date")]
+
+        [JsonConverter(typeof(DateOnlyJsonConverter))]
         public DateTime Date { get; set; } 
         public string? Note { get; set; } 
 

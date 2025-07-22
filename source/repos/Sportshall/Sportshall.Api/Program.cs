@@ -1,8 +1,23 @@
 
+using Microsoft.Extensions.FileProviders;
 using Sportshall.Api.Helper;
 using Sportshall.Api.Middleware;
 using Sportshall.infrastructure;
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+
+
+        });
+});
 
 // Add services to the container.
 builder.Services.AddMemoryCache();
@@ -16,6 +31,19 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
 
 
+// Serve wwwroot folder (default)
+app.UseStaticFiles();
+
+
+
+
+
+
+
+
+app.UseCors("AllowReactApp");
+
+
 // Role & Admin user seeding
 using (var scope = app.Services.CreateScope())
 {
@@ -24,6 +52,8 @@ using (var scope = app.Services.CreateScope())
     await RoleSeeder.SeedRolesAsync(services);
     await UserSeeder.SeedAdminAsync(services);
 }
+
+
 
 
 // Configure the HTTP request pipeline.

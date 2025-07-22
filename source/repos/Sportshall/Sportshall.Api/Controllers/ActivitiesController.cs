@@ -26,7 +26,9 @@ namespace Sportshall.Api.Controllers
 
             try
             {
-                var activities = await work.ActivitiesRepositry.GetAllAsync(activitesParams);
+                //var activities = await work.ActivitiesRepositry.GetAllAsync(activitesParams);
+
+                var activities = await work.ActivitiesRepositry.GetAllAsync( x => x.Photos);
 
                 if (activities is null)
                 {
@@ -36,12 +38,14 @@ namespace Sportshall.Api.Controllers
 
                 var totalCount = await work.ActivitiesRepositry.CountAsync();
 
-                
 
-               
+                var activitiesDTO = mapper.Map<List<ActivitiesDTO>>(activities);
 
 
-                return Ok(new Pagination<ActivitiesDTO>(activitesParams.PageNumber, activitesParams.PageSize,  totalCount, activities));
+
+
+
+                return Ok(activitiesDTO);
 
             }
             catch (Exception ex)

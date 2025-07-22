@@ -23,7 +23,11 @@ namespace Sportshall.Core.Services
 
         Task<List<SubscriptionsDTO>> GetAllSubscription(SubscriptionsParams subscriptionsParams);
 
-         Task<int> CountAsync();
+         Task<int> CountAsync(SubscriptionsParams subscriptionsParams);
+
+        Task<decimal> GetTotalSubscriptionAsync(FilterParams filterParams);
+
+        Task<List<MonthlyStat>> GetSubscriptionstats();
 
 
     }

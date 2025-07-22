@@ -1,65 +1,71 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Sportshall.Core.Entites;
 using Sportshall.Core.Services;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Sportshall.infrastructure.Repositries.Service
+public class GenerateToken : IGenerateToken
 {
-    public class GenerateToken : IGenerateToken
+    private readonly IConfiguration _configuration;
+    private readonly UserManager<AppUser> _userManager;
+
+    public GenerateToken(IConfiguration configuration, UserManager<AppUser> userManager)
     {
-        private readonly IConfiguration _configuration;
-        public GenerateToken(IConfiguration _configuration)
+        _configuration = configuration;
+        _userManager = userManager;
+    }
+
+    public async Task<string> GetAndCreateToken(AppUser user)
+    {
+
+        try
         {
-            this._configuration = _configuration;
-        }
-        public string GetAndCreateToken(AppUser user)
-        {
+
+            if (user == null) throw new Exception("User is null");
+            if (_userManager == null) throw new Exception("UserManager is null");
+
+
+
+            var roles = await _userManager.GetRolesAsync(user);
 
             List<Claim> claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+
+            foreach (var role in roles)
             {
-                  new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Email, user.Email)
-              
-            };
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
-            var security = _configuration["Token:Secret"];
+            var securityKey = Encoding.ASCII.GetBytes(_configuration["Token:Secret"]);
+            var credentials = new SigningCredentials(new SymmetricSecurityKey(securityKey), SecurityAlgorithms.HmacSha256);
 
-            var securityKey = Encoding.ASCII.GetBytes(security);
-
-            SigningCredentials credentials = new SigningCredentials(
-                new SymmetricSecurityKey(securityKey),
-                SecurityAlgorithms.HmacSha256Signature
-            );
-
-
-            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(claims
-                ),
-
+                Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(1),
-
-                Issuer = _configuration["JWT:Issuer"],
-
+                Issuer = _configuration["Token:Issuer"],
                 SigningCredentials = credentials,
-                NotBefore = DateTime.Now,
+                NotBefore = DateTime.Now
             };
 
-            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-
+            var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-
-
-
-
             return tokenHandler.WriteToken(token);
+
         }
+        catch (Exception ex)
+        {
+            // Log the exception or handle it as needed
+            throw new Exception("An error occurred while generating the token.", ex);
+        }
+       
     }
 }

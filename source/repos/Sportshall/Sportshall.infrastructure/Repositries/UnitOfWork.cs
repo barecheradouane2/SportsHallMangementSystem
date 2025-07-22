@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Sportshall.Core.Entites;
 using Sportshall.Core.interfaces;
 using Sportshall.Core.Services;
@@ -23,16 +24,20 @@ namespace Sportshall.infrastructure.Repositries
 
         private readonly IEmailService _emailService;
 
+      
+
         private readonly IGenerateToken token;
 
         private readonly SignInManager<AppUser> _signInManager;
 
+        private readonly RoleManager<IdentityRole> _roleManager;
 
 
 
 
 
-        public UnitOfWork(AppDbContext _context, IMapper mapper, IImageMangementService imageMangementService, UserManager<AppUser> userManager, IEmailService emailService, SignInManager<AppUser> signInManager, IGenerateToken token)
+
+        public UnitOfWork(AppDbContext _context, IMapper mapper, IImageMangementService imageMangementService, UserManager<AppUser> userManager, IEmailService emailService, SignInManager<AppUser> signInManager, IGenerateToken token, RoleManager<IdentityRole> roleManager)
         {
             this._context = _context;
             _mapper = mapper;
@@ -48,8 +53,10 @@ namespace Sportshall.infrastructure.Repositries
             _userManager = userManager;
             _emailService = emailService;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             this.token = token;
-            Auth = new AuthRepositry(_userManager, _emailService, _signInManager,token);
+
+            Auth = new AuthRepositry(_mapper, _userManager, _emailService, _signInManager,token, _roleManager);
          
         }
         public IPhotoRepositry photoRepositry { get; }

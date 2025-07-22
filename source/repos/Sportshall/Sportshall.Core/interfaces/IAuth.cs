@@ -1,4 +1,6 @@
 ﻿using Sportshall.Core.DTO;
+using Sportshall.Core.Entites;
+using Sportshall.Core.Sharing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace Sportshall.Core.interfaces
 
         public Task<string> RegisterUser(RegisterDTO registerDTO);
 
-        public Task<string> LoginUser(LoginDTO loginDTO);
+        public Task<UserResponse> LoginUser(LoginDTO loginDTO);
 
         public Task SendEmail(string email, string code, string component, string subject, string message);
 
@@ -23,6 +25,12 @@ namespace Sportshall.Core.interfaces
 
 
         public Task<bool> ConfirmEmail(ActiveAccountDTO activeAccountDTO);
+
+        public Task<IEnumerable<UserDTODetails>> GetallUsers();
+
+        public Task<UserDTODetails> GetUserById(Guid id);
+
+        public Task<UserDTODetails> DeleteUser(Guid id);
 
 
 

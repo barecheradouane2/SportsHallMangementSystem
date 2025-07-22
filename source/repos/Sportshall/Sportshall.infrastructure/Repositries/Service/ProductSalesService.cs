@@ -37,11 +37,13 @@ namespace Sportshall.infrastructure.Repositries.Service
             {
                 var product = await _unitOfWork.ProductsRepositry.GetByIdAsync(item.ProductsID);
 
+                product.StockQty -= item.qty;
+
                 var productSalesItem = new ProductSalesItem(
                     product.Id,
                     item.qty,
                     product.Name,
-                    item.qty * product.NewPrice
+                   ( item.qty * product.NewPrice) / product.BaseQty
                 );
 
                 productSalesItemslist.Add(productSalesItem);
@@ -53,7 +55,7 @@ namespace Sportshall.infrastructure.Repositries.Service
 
             var productsales = new ProductSales(
                 totalPrice: subtotal,
-                ClientPayement: productSales.ClientPayement,
+                clientPayement: productSales.ClientPayement,
                 isFullPaid: isFullPaid,
                 membersID: productSales.MembersID
             );
@@ -84,7 +86,7 @@ namespace Sportshall.infrastructure.Repositries.Service
 
             await _context.SaveChangesAsync();
 
-            var result = _mapper.Map<ProductSalesDTO>(productsales); // ✅ correct mapping
+            var result = _mapper.Map<ProductSalesDTO>(productsales); 
 
             return result;
         }
