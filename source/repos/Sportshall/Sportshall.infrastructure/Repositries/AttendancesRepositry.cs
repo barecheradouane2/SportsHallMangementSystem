@@ -34,7 +34,7 @@ namespace Sportshall.infrastructure.Repositries
             {
                 query = query.OrderBy(x => x.AttendanceDate);
             }
-            else if (attendancesParams.Sort == "desc")
+            else 
             {
                 query = query.OrderByDescending(x => x.AttendanceDate);
             }

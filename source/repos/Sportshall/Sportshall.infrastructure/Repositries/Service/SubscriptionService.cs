@@ -85,6 +85,8 @@ namespace Sportshall.infrastructure.Repositries.Service
                  .ThenInclude(o => o.Activities)
                 .AsNoTracking();
 
+            query=query.OrderByDescending(x => x.EndDate);
+
             //if (!string.IsNullOrWhiteSpace(subscriptionsParams.OfferName))
             //{
             //    query = query.Where(x => x.Offer.Name.ToLower() == subscriptionsParams.OfferName.ToLower());

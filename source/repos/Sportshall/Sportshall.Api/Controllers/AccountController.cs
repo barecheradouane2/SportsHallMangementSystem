@@ -76,6 +76,28 @@ namespace Sportshall.Api.Controllers
             return Ok( result);
         }
 
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            // Sign out from ASP.NET Identity
+            //await signInManager.SignOutAsync();
+
+            // Remove the JWT cookie
+            Response.Cookies.Delete("token", new CookieOptions
+            {
+                Domain = "localhost", // Make sure this matches the domain you set in login
+                Secure = true,
+                HttpOnly = true,
+                SameSite = SameSiteMode.Strict
+            });
+
+            return Ok(new ResponseApi(200, "Logged out successfully"));
+        }
+
+
+
+
+
 
         [HttpPost("reset-password")]
 
