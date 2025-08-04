@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sportshall.Api.Helper;
 using Sportshall.Core.DTO;
@@ -21,6 +22,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpPost("create-product-sales")]
+        [Authorize(Roles = "Admin,User,Coach")]
 
         public async Task<IActionResult> CreateProductSales(AddProductSalesDTO addProductSalesDTO)
         {
@@ -44,6 +46,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-all-product-sales")]
+        [Authorize(Roles = "Admin,User,Coach")]
         public async Task<IActionResult> GetAllProductSales( [FromQuery] GeneralParams generalParams)
         {
             try
@@ -69,6 +72,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-product-sales-by-id/{id}")]
+        [Authorize(Roles = "Admin,User,Coach")]
         public async Task<IActionResult> GetProductSalesById(int id)
         {
             try
@@ -89,6 +93,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpPut("update-product-sales")]
+        [Authorize(Roles = "Admin,User,Coach")]
         public async Task<IActionResult> UpdateProductSales(UpdateProductSalesDTO updateProductSalesDTO)
         {
             try
@@ -110,6 +115,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpDelete("delete-product-sales/{id}")]
+        [Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> DeleteProductSales(int id)
         {

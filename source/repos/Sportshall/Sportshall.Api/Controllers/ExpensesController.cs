@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sportshall.Api.Helper;
@@ -18,6 +19,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-all-expenses")]
+        [Authorize(Roles = "Admin,User,Coach")]
 
 
         public async Task<IActionResult> GetAllExpenses([FromQuery] GeneralParams generalParams)
@@ -46,6 +48,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-total-expenses")]
+        [Authorize(Roles = "Admin,User,Coach")]
         public async Task<IActionResult> GetTotalExpenses([FromQuery] FilterParams filterParams)
         {
             try
@@ -64,6 +67,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpGet("get-expenses-by-id/{id}")]
+        [Authorize(Roles = "Admin,User,Coach")]
 
         public async Task<IActionResult> GetExpensesById(int id)
         {
@@ -87,6 +91,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpPost("add-expenses")]
+        [Authorize(Roles = "Admin,User,Coach")] 
         public async Task<IActionResult> AddExpenses([FromBody] AddExpensesDTO expensesDTO)
         {
             try
@@ -111,6 +116,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpPut("update-expenses/{id}")]
+        [Authorize(Roles = "Admin,User,Coach")]
 
         public async Task<IActionResult> UpdateExpenses(int id, [FromBody] UpdateExpensesDTO expensesDTO)
         {
@@ -142,6 +148,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpDelete("delete-expenses/{id}")]
+        [Authorize(Roles = "Admin")]
 
 
         public async Task<IActionResult> DeleteExpenses(int id)

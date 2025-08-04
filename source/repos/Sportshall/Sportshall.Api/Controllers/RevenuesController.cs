@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sportshall.Api.Helper;
@@ -18,6 +19,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-all-revenues")]
+        [Authorize(Roles = "Admin,User,Coach")]
         public async Task<IActionResult> GetAllRevenues([FromQuery] GeneralParams generalParams)
         {
             try
@@ -40,6 +42,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-total-revenue")]
+        [Authorize(Roles = "Admin,User,Coach")]
 
         public async Task<IActionResult> GetTotalRevenue([FromQuery] FilterParams filterParams)
         {
@@ -59,6 +62,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpPost("create-revenue")]
+        [Authorize(Roles = "Admin,User,Coach")]
         public async Task<IActionResult> AddRevenue([FromBody] AddRevenuesDTO addRevenuesDTO)
         {
             try
@@ -81,6 +85,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpPut("update-revenue")]
+        [Authorize(Roles = "Admin,User,Coach")]
 
 
         public async Task<IActionResult> UpdateRevenue([FromBody] UpdateRevenuesDTO updateRevenuesDTO)
@@ -106,6 +111,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpDelete("delete-revenue/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteRevenue(int id)
         {
             try
@@ -128,6 +134,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-revenue-by-id/{id}")]
+        [Authorize(Roles = "Admin,User,Coach")]
         public async Task<IActionResult> GetRevenueById(int id)
         {
             try

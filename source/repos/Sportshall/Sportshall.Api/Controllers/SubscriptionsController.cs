@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sportshall.Api.Helper;
 using Sportshall.Core.DTO;
@@ -23,6 +24,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpPost("add-subscription")]
+        [Authorize(Roles = "Admin,User,Coach")]
 
         public  async Task <IActionResult>  AddSubscription(AddSubscriptionsDTO addSubscriptionsDTO)
         {
@@ -51,6 +53,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpGet("getall-subsctipton")]
+        [Authorize(Roles = "Admin,User,Coach")]
 
 
         public async Task<IActionResult> GetAllSubsctiption([FromQuery] SubscriptionsParams subscriptionsParams)
@@ -85,6 +88,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-subscription-stats")]
+        [Authorize(Roles = "Admin,User,Coach")]
         public async Task<IActionResult> GetSubscriptionStats()
         {
             try
@@ -101,6 +105,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpGet("getall-total-subsctipton")]
+        [Authorize(Roles = "Admin,User,Coach")]
         public async Task<IActionResult> GetTotalSubscription([FromQuery] FilterParams filterParams)
         {
             try
@@ -117,6 +122,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpGet("get-subsctipton-by-id/{id}")]
+        [Authorize(Roles = "Admin,User,Coach")]
 
 
         public async Task<IActionResult> GetOneSubscription(int id)
@@ -143,6 +149,9 @@ namespace Sportshall.Api.Controllers
 
         [HttpDelete("delete-subscription/{id}")]
 
+        [Authorize(Roles = "Admin")]
+
+
         public async Task<IActionResult> Deletesubscription(int id)
         {
             try
@@ -165,6 +174,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpPut("update-subscription")]
+        [Authorize(Roles = "Admin,User,Coach")]
 
 
         public async Task<IActionResult> Updatesubscription(UpdateSubscriptionsDTO updateSubscriptionsDTO)

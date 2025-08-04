@@ -21,6 +21,9 @@ namespace Sportshall.Api.Controllers
 
         [HttpPost("register")]
 
+        [Authorize(Roles = "Admin")]
+
+
         public async Task<IActionResult> Register([FromBody] RegisterDTO registerDto)
         {
             //if (!ModelState.IsValid)
@@ -117,6 +120,8 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-all-users")]
+        [Authorize(Roles = "Admin")]
+
 
         public async Task<IActionResult> GetAllUsers()
         {
@@ -130,6 +135,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-user-by-id/{id:guid}")]
+        [Authorize(Roles = "Admin,User,Coach")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
             var user = await work.Auth.GetUserById(id);
@@ -141,6 +147,7 @@ namespace Sportshall.Api.Controllers
             return Ok(user);
         }
         [HttpDelete("delete-user/{id:guid}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
             var user = await work.Auth.DeleteUser(id);

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sportshall.Api.Helper;
@@ -18,6 +19,9 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpGet("get-all-Members")]
+
+        [Authorize(Roles = "Admin,User,Coach")]
+
         public async Task<IActionResult> GetAllMembers([FromQuery] GeneralParams generalParams)
         {
             try
@@ -42,6 +46,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-Member-by-id")]
+        [Authorize(Roles = "Admin,User,Coach")]
         public async Task<IActionResult> GetMemberById(int id)
         {
             try
@@ -62,6 +67,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpPost("add-Member")]
+        [Authorize(Roles = "Admin,User,Coach")]
         public async Task<IActionResult> AddMember([FromBody] AddMembersDTO member)
         {
             try
@@ -84,6 +90,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpPut("update-Member")]
+        [Authorize(Roles = "Admin,User,Coach")]
 
 
         public async Task<IActionResult> UpdateMember([FromBody] UpdateMembersDTO memberdto)
@@ -114,6 +121,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpDelete("delete-Member/{id}")]
+        [Authorize(Roles = "Admin")]
 
 
         public async Task<IActionResult> DeleteMember(int id)

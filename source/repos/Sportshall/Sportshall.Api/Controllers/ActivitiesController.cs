@@ -9,6 +9,7 @@ using Sportshall.Core.interfaces;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Collections.Generic;
 using Sportshall.Core.Sharing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Sportshall.Api.Controllers
 {
@@ -20,6 +21,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-all")]
+        [Authorize(Roles = "Admin,User,Coach")]
         // 
         public async Task<IActionResult> GetAllActivities([FromQuery] ActivitesParams activitesParams)
         {
@@ -63,6 +65,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpGet("get-by-id/{id}")]
+        [Authorize(Roles = "Admin,User,Coach")]
 
         public async Task<IActionResult> GetActivityById(int id)
         {
@@ -88,6 +91,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpPost("add-activity")]
+        [Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> AddActivity(AddActivitiesDTO activitesDTO)
         {
@@ -106,6 +110,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpPut("update-activity")]
+        [Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> UpdateActivity( UpdateActivitiesDTO activitesDTO)
         {
@@ -127,6 +132,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpDelete("delete-activity/{id}")]
+        [Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> DeleteActivity(int id)
         {
