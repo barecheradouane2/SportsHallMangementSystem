@@ -19,7 +19,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-all-offers")]
-        [Authorize(Roles = "Admin,User,Coach")]
+        //[Authorize(Roles = "Admin,User,Coach")]
         public async Task<IActionResult> GetAllOffers([FromQuery] GeneralParams activitesParams)
         {
             try
@@ -50,7 +50,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-offer-by-id/{id}")]
-        [Authorize(Roles = "Admin,User,Coach")]
+        //[Authorize(Roles = "Admin,User,Coach")]
 
         public async Task<IActionResult> GetOfferById(int id)
         {
@@ -75,7 +75,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpPost("add-offer")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> AddOffer([FromBody] AddOffersDTO offersDTO)
         {
@@ -109,7 +109,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpPut("update-offer")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> UpdateOffer([FromBody] AddOffersDTO offersDTO)
         {
@@ -134,7 +134,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpDelete("delete-offer/{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> DeleteOffer(int id)
         {

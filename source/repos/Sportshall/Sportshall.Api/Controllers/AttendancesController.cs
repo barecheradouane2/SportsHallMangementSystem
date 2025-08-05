@@ -20,7 +20,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-all-Attendances")]
-        [Authorize(Roles = "Admin,User,Coach")]
+        //[Authorize(Roles = "Admin,User,Coach")]
 
         public async Task<IActionResult> GetAllAsync([FromQuery]AttendancesParams attendancesParams)
         {
@@ -51,7 +51,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpGet("get-Attendances-by-id/{id}")]
-        [Authorize(Roles = "Admin,User,Coach")]
+        //[Authorize(Roles = "Admin,User,Coach")]
 
         public async  Task<IActionResult> GetAttendancesById(int id)
         {
@@ -78,7 +78,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpPost("add-Attendances")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
 
 
         public async Task<IActionResult>  AddAttendances([FromBody] AddAttendancesDTO attendancesDTO)
@@ -113,7 +113,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpPut("update-Attendances")]
-        [Authorize(Roles = "Admin")] 
+        //[Authorize(Roles = "Admin")] 
 
         public async Task<IActionResult> UpdateOffer([FromBody] UpdateAttendancesDTO attendancesDTO)
         {
@@ -139,7 +139,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpDelete("delete-Attendances/{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> DeleteAttendances(int id)
         {

@@ -21,7 +21,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpGet("get-all")]
-        [Authorize(Roles = "Admin,User,Coach")]
+        //[Authorize(Roles = "Admin,User,Coach")]
         // 
         public async Task<IActionResult> GetAllActivities([FromQuery] ActivitesParams activitesParams)
         {
@@ -65,7 +65,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpGet("get-by-id/{id}")]
-        [Authorize(Roles = "Admin,User,Coach")]
+        //[Authorize(Roles = "Admin,User,Coach")]
 
         public async Task<IActionResult> GetActivityById(int id)
         {
@@ -91,7 +91,7 @@ namespace Sportshall.Api.Controllers
 
 
         [HttpPost("add-activity")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> AddActivity(AddActivitiesDTO activitesDTO)
         {
@@ -110,7 +110,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpPut("update-activity")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> UpdateActivity( UpdateActivitiesDTO activitesDTO)
         {
@@ -132,7 +132,7 @@ namespace Sportshall.Api.Controllers
         }
 
         [HttpDelete("delete-activity/{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> DeleteActivity(int id)
         {
